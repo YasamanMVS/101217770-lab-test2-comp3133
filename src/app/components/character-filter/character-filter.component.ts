@@ -64,6 +64,7 @@ export type FilterType = 'all' | 'students' | 'staff' | 'spells';
       max-width: 100%;
       padding: 0 16px;
       box-sizing: border-box;
+      font-family: 'Cinzel', serif;
     }
 
     .filter-container {
@@ -92,17 +93,54 @@ export type FilterType = 'all' | 'students' | 'staff' | 'spells';
       font-size: 14px;
       white-space: nowrap;
       transition: all 0.3s ease;
+      font-family: 'Cinzel', serif !important;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 500;
     }
 
     .house-filter {
       width: 100%;
       max-width: 300px;
+      font-family: 'Cinzel', serif;
+
+      ::ng-deep {
+        .mat-mdc-select-value, 
+        .mat-mdc-select-arrow,
+        .mat-mdc-form-field-label {
+          color: white;
+          font-family: 'Cinzel', serif;
+        }
+
+        .mat-mdc-form-field-underline {
+          background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .mat-mdc-select-panel {
+          background-color: #1a1a1a;
+          border: 1px solid #333;
+          
+          .mat-mdc-option {
+            font-family: 'Cinzel', serif;
+            color: white;
+            
+            &:hover:not(.mat-mdc-option-disabled) {
+              background-color: rgba(103, 58, 183, 0.1);
+            }
+            
+            &.mat-mdc-option-active {
+              background-color: rgba(103, 58, 183, 0.2);
+            }
+          }
+        }
+      }
     }
 
     button.active {
       background-color: #673ab7;
       color: white;
       transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
 
     /* Mobile Devices */
@@ -125,6 +163,7 @@ export type FilterType = 'all' | 'students' | 'staff' | 'spells';
         max-width: 100%;
         width: 100%;
         margin: 0;
+        font-size: 13px;
       }
 
       .house-filter {

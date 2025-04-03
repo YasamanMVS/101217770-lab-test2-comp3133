@@ -57,6 +57,7 @@ interface Spell {
       overflow-x: hidden;
       min-height: 100vh;
       background-color: #121212;
+      font-family: 'Cinzel', serif;
     }
     
     .container {
@@ -172,6 +173,7 @@ interface Spell {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         font-family: 'IM Fell English SC', serif;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
       }
 
       .house-name {
@@ -179,7 +181,7 @@ interface Spell {
         font-size: 1.1rem;
         font-weight: 500;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 2px;
         font-family: 'Cinzel', serif;
 
         &.gryffindor { color: #FF0000; }
@@ -196,16 +198,23 @@ interface Spell {
         h2 {
           color: #d4af37;
           margin-bottom: 12px;
+          font-family: 'IM Fell English SC', serif;
+          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .spell-preview {
           color: #ffffff;
           margin-bottom: 16px;
           line-height: 1.5;
+          font-family: 'Cinzel', serif;
+          font-size: 0.95rem;
+          letter-spacing: 0.5px;
         }
 
         button {
           margin-top: auto;
+          font-family: 'Cinzel', serif;
+          letter-spacing: 1px;
         }
       }
     }
@@ -234,6 +243,7 @@ interface Spell {
 
           .house-name {
             font-size: 1rem;
+            letter-spacing: 1px;
           }
         }
       }
