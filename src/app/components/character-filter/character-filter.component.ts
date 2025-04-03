@@ -58,39 +58,89 @@ export type FilterType = 'all' | 'students' | 'staff' | 'spells';
     </div>
   `,
   styles: [`
+    :host {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+
     .filter-container {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 20px;
-      margin: 20px 0;
+      margin: 20px auto;
+      max-width: 1200px;
+      width: 100%;
     }
 
     .filter-buttons {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       flex-wrap: wrap;
       justify-content: center;
+      width: 100%;
+    }
+
+    button {
+      flex: 1;
+      min-width: 150px;
+      max-width: 250px;
+      padding: 8px 16px;
+      font-size: 14px;
+      white-space: nowrap;
+      transition: all 0.3s ease;
     }
 
     .house-filter {
-      width: 200px;
+      width: 100%;
+      max-width: 300px;
     }
 
     button.active {
       background-color: #673ab7;
       color: white;
+      transform: scale(1.05);
     }
 
+    /* Mobile Devices */
     @media (max-width: 600px) {
+      :host {
+        padding: 0 8px;
+      }
+
+      .filter-container {
+        margin: 12px auto;
+        gap: 12px;
+      }
+
       .filter-buttons {
         flex-direction: column;
-        width: 100%;
-        max-width: 300px;
+        gap: 8px;
       }
 
       button {
+        max-width: 100%;
         width: 100%;
+        margin: 0;
+      }
+
+      .house-filter {
+        max-width: 100%;
+      }
+    }
+
+    /* Tablets */
+    @media (min-width: 601px) and (max-width: 960px) {
+      .filter-buttons {
+        gap: 10px;
+      }
+
+      button {
+        min-width: calc(50% - 10px);
+        max-width: calc(50% - 10px);
       }
     }
   `]

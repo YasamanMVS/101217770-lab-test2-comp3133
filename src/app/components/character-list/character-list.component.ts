@@ -27,6 +27,9 @@ interface Spell {
         <mat-card *ngFor="let character of characters" class="character-card" (click)="showDetails(character)">
           <div class="card-image-container">
             <img [src]="character.image || 'assets/placeholder.png'" [alt]="character.name">
+            <div class="card-overlay">
+              <mat-icon>info</mat-icon>
+            </div>
           </div>
           <mat-card-content>
             <h2>{{character.name}}</h2>
@@ -62,150 +65,196 @@ interface Spell {
       width: 100%;
       box-sizing: border-box;
       background-color: #121212;
-    }
-
-    h1 {
-      color: #d4af37;
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
-      margin-bottom: 1.5em;
-      text-align: center;
-      font-family: 'IM Fell English SC', serif;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
     .character-grid, .spells-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 24px;
       margin: 20px auto;
-      padding: 0 20px;
-      max-width: 1400px;
+      padding: 0;
       width: 100%;
       box-sizing: border-box;
     }
 
-    .character-card {
+    .character-card, .spell-card {
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       background-color: #1a1a1a !important;
       border-radius: 12px !important;
       overflow: hidden;
       padding: 0;
       border: 2px solid #333333;
       box-shadow: 0 8px 16px rgba(0,0,0,0.5) !important;
-      width: 100%;
-      margin: 0 auto;
-      max-width: 350px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
 
       &:hover {
         transform: translateY(-5px);
         border-color: #444444;
         box-shadow: 0 12px 24px rgba(0,0,0,0.7) !important;
       }
+    }
 
-      .card-image-container {
-        position: relative;
+    .card-image-container {
+      position: relative;
+      width: 100%;
+      padding-top: 140%;
+      overflow: hidden;
+      background-color: #000000;
+      
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        padding-top: 140%;
-        overflow: hidden;
-        background-color: #000000;
-        
-        img {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: top;
-          opacity: 0.9;
-          transition: opacity 0.3s ease;
-        }
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+        opacity: 0.9;
+        transition: all 0.3s ease;
       }
 
-      &:hover .card-image-container img {
-        opacity: 1;
-      }
+      .card-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
 
-      mat-card-content {
-        padding: 16px;
-        text-align: center;
-        background-color: #1a1a1a !important;
-
-        h2 {
-          margin: 0 0 8px 0;
-          font-size: clamp(1.2rem, 3vw, 1.8rem);
+        mat-icon {
           color: white;
-          font-weight: 500;
-          line-height: 1.2;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          font-family: 'IM Fell English SC', serif;
-        }
-
-        .house-name {
-          margin: 0;
-          font-size: clamp(1rem, 2.5vw, 1.4rem);
-          font-weight: 500;
-          text-transform: uppercase;
-          letter-spacing: 1px;
-          font-family: 'Cinzel', serif;
-
-          &.gryffindor { color: #FF0000; }
-          &.slytherin { color: #00FF00; }
-          &.hufflepuff { color: #FFD700; }
-          &.ravenclaw { color: #0000FF; }
+          font-size: 48px;
+          width: 48px;
+          height: 48px;
         }
       }
     }
 
-    /* Extra Small Devices (phones) */
-    @media (max-width: 480px) {
+    .character-card:hover {
+      .card-image-container img {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+
+      .card-overlay {
+        opacity: 1;
+      }
+    }
+
+    mat-card-content {
+      padding: 16px;
+      text-align: center;
+      background-color: #1a1a1a !important;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      h2 {
+        margin: 0 0 8px 0;
+        font-size: 1.4rem;
+        color: white;
+        font-weight: 500;
+        line-height: 1.2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        font-family: 'IM Fell English SC', serif;
+      }
+
+      .house-name {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-family: 'Cinzel', serif;
+
+        &.gryffindor { color: #FF0000; }
+        &.slytherin { color: #00FF00; }
+        &.hufflepuff { color: #FFD700; }
+        &.ravenclaw { color: #0000FF; }
+      }
+    }
+
+    .spell-card {
+      mat-card-content {
+        padding: 20px;
+
+        h2 {
+          color: #d4af37;
+          margin-bottom: 12px;
+        }
+
+        .spell-preview {
+          color: #ffffff;
+          margin-bottom: 16px;
+          line-height: 1.5;
+        }
+
+        button {
+          margin-top: auto;
+        }
+      }
+    }
+
+    /* Mobile Devices */
+    @media (max-width: 600px) {
       .container {
-        padding: 10px;
+        padding: 12px;
       }
 
       .character-grid, .spells-grid {
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
         gap: 16px;
-        padding: 0 10px;
+        margin: 12px auto;
       }
 
-      .character-card {
-        max-width: 100%;
-
-        .card-image-container {
-          padding-top: 130%;
-        }
+      .character-card, .spell-card {
+        border-width: 1px;
 
         mat-card-content {
           padding: 12px;
+
+          h2 {
+            font-size: 1.2rem;
+          }
+
+          .house-name {
+            font-size: 1rem;
+          }
         }
+      }
+
+      .card-image-container {
+        padding-top: 130%;
       }
     }
 
-    /* Small Devices (tablets) */
-    @media (min-width: 481px) and (max-width: 768px) {
+    /* Tablets */
+    @media (min-width: 601px) and (max-width: 960px) {
       .character-grid, .spells-grid {
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
         gap: 20px;
       }
     }
 
-    /* Medium Devices (laptops) */
-    @media (min-width: 769px) and (max-width: 1024px) {
+    /* Laptops and larger screens */
+    @media (min-width: 961px) {
       .character-grid, .spells-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      }
-    }
-
-    /* Large Devices (desktops) */
-    @media (min-width: 1025px) {
-      .character-grid, .spells-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       }
     }
   `]

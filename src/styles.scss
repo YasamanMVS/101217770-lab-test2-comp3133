@@ -1,25 +1,101 @@
 @import '@angular/material/prebuilt-themes/purple-green.css';
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Cinzel:wght@400;500;600&display=swap');
 
-/* Global styles */
-html, body {
-  height: 100%;
+/* Reset and base styles */
+* {
   margin: 0;
-  font-family: 'Cinzel', "Helvetica Neue", sans-serif;
-  background-color: #121212;
-  color: #ffffff;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #121212;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Material overrides */
+.mat-mdc-card {
+  --mdc-elevated-card-container-color: #1a1a1a;
+}
+
+.mat-mdc-raised-button {
+  min-height: 48px !important;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+/* Responsive container */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Responsive typography */
+h1 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+h2 {
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+}
+
+p {
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  line-height: 1.5;
+}
+
+/* Mobile styles */
+@media (max-width: 600px) {
+  .container {
+    padding: 0 12px;
+  }
+
+  .mat-mdc-card {
+    margin-bottom: 16px;
+  }
+}
+
+/* Tablet styles */
+@media (min-width: 601px) and (max-width: 960px) {
+  .container {
+    padding: 0 16px;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
+
+/* Global styles */
 body {
   min-height: 100vh;
   background-color: #121212;
-}
-
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 20px;
 }
 
 h1 {
@@ -101,53 +177,6 @@ h1 {
 
   .mdc-dialog__content {
     color: #ffffff !important;
-  }
-}
-
-/* Scrollbar styles */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #1a1a1a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #444;
-}
-
-/* Material overrides */
-.mat-toolbar {
-  background-color: #1a1a1a !important;
-}
-
-.mat-mdc-button-base {
-  font-family: 'Cinzel', serif !important;
-}
-
-@media (max-width: 768px) {
-  .character-grid, .spells-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
-  }
-  
-  .character-card .card-image-container {
-    height: 200px !important;
-  }
-
-  .spell-dialog {
-    width: 90vw !important;
-    max-width: none !important;
-  }
-
-  h1 {
-    font-size: 2em;
   }
 }
 
