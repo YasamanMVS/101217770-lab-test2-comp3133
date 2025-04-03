@@ -1,6 +1,7 @@
 export interface Character {
   id: string;
   name: string;
+  alternate_names: string[];
   species: string;
   gender: string;
   house: string;
@@ -10,11 +11,16 @@ export interface Character {
   ancestry: string;
   eyeColour: string;
   hairColour: string;
-  wand: Wand;
+  wand: {
+    wood: string;
+    core: string;
+    length: number;
+  };
   patronus: string;
   hogwartsStudent: boolean;
   hogwartsStaff: boolean;
   actor: string;
+  alternate_actors: string[];
   alive: boolean;
   image: string;
 }

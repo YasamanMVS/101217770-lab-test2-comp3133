@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { CharacterFilterComponent, FilterType } from '../character-filter/character-filter.component';
-import { SpellDialogComponent } from '../spell-dialog/spell-dialog.component';
+import { CharacterDialogComponent } from '../character-dialog/character-dialog.component';
 
 interface Spell {
   name: string;
@@ -18,58 +18,19 @@ interface Spell {
 @Component({
   selector: 'app-character-list',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatDialogModule, MatIconModule, CharacterFilterComponent, SpellDialogComponent],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatDialogModule, MatIconModule, CharacterFilterComponent],
   template: `
     <div class="container">
-      <h1>Harry Potter Characters</h1>
       <app-character-filter (filterChanged)="handleFilterChange($event)"></app-character-filter>
       
       <div class="character-grid" *ngIf="!showSpells">
         <mat-card *ngFor="let character of characters" class="character-card" (click)="showDetails(character)">
           <div class="card-image-container">
             <img [src]="character.image || 'assets/placeholder.png'" [alt]="character.name">
-            <div class="character-status" [class.alive]="character.alive">
-              {{ character.alive ? 'Alive' : 'Deceased' }}
-            </div>
           </div>
           <mat-card-content>
             <h2>{{character.name}}</h2>
-            <p [class]="'house-name ' + character.house?.toLowerCase()">{{character.house || 'Unknown House'}}</p>
-            
-            <div class="character-details">
-              <div class="detail-section">
-                <h3>Personal Info</h3>
-                <p><strong>Birth:</strong> {{character.dateOfBirth || 'Unknown'}}</p>
-                <p><strong>Ancestry:</strong> {{character.ancestry || 'Unknown'}}</p>
-                <p><strong>Eyes:</strong> {{character.eyeColour || 'Unknown'}}</p>
-                <p><strong>Hair:</strong> {{character.hairColour || 'Unknown'}}</p>
-              </div>
-
-              <div class="detail-section">
-                <h3>Magical Abilities</h3>
-                <div class="wand-info" *ngIf="character.wand?.wood">
-                  <h4>Wand</h4>
-                  <p>{{character.wand.wood}} wood, {{character.wand.core}}</p>
-                  <p>{{character.wand.length}} inches</p>
-                </div>
-                <p *ngIf="character.patronus"><strong>Patronus:</strong> {{character.patronus}}</p>
-              </div>
-
-              <div class="detail-section">
-                <h3>Hogwarts Role</h3>
-                <div class="role-badges">
-                  <span class="badge" *ngIf="character.hogwartsStudent">Student</span>
-                  <span class="badge" *ngIf="character.hogwartsStaff">Staff</span>
-                </div>
-              </div>
-
-              <div class="detail-section" *ngIf="character.alternate_names?.length">
-                <h3>Also Known As</h3>
-                <div class="alternate-names">
-                  <span class="alt-name" *ngFor="let name of character.alternate_names">{{name}}</span>
-                </div>
-              </div>
-            </div>
+            <p [class]="'house-name ' + character.house.toLowerCase()">{{character.house || 'Unknown House'}}</p>
           </mat-card-content>
         </mat-card>
       </div>
@@ -86,177 +47,165 @@ interface Spell {
     </div>
   `,
   styles: [`
+    :host {
+      display: block;
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
+      min-height: 100vh;
+      background-color: #121212;
+    }
+    
     .container {
       padding: 20px;
-      background-color: #121212;
       min-height: 100vh;
+      width: 100%;
+      box-sizing: border-box;
+      background-color: #121212;
     }
+
+    h1 {
+      color: #d4af37;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 1.5em;
+      text-align: center;
+      font-family: 'IM Fell English SC', serif;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
     .character-grid, .spells-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 24px;
-      margin-top: 20px;
+      margin: 20px auto;
       padding: 0 20px;
+      max-width: 1400px;
+      width: 100%;
+      box-sizing: border-box;
     }
+
     .character-card {
       cursor: pointer;
-      transition: transform 0.2s;
-      background-color: #1a1a1a;
-      border-radius: 8px;
+      transition: all 0.3s ease;
+      background-color: #1a1a1a !important;
+      border-radius: 12px !important;
       overflow: hidden;
       padding: 0;
+      border: 2px solid #333333;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.5) !important;
+      width: 100%;
+      margin: 0 auto;
+      max-width: 350px;
+
       &:hover {
         transform: translateY(-5px);
+        border-color: #444444;
+        box-shadow: 0 12px 24px rgba(0,0,0,0.7) !important;
       }
+
       .card-image-container {
         position: relative;
         width: 100%;
-        height: 350px;
+        padding-top: 140%;
         overflow: hidden;
+        background-color: #000000;
+        
         img {
+          position: absolute;
+          top: 0;
+          left: 0;
           width: 100%;
           height: 100%;
           object-fit: cover;
           object-position: top;
-        }
-        .character-status {
-          position: absolute;
-          top: 16px;
-          right: 16px;
-          padding: 4px 12px;
-          border-radius: 16px;
-          background-color: rgba(244, 67, 54, 0.9);
-          color: white;
-          font-size: 0.9em;
-          font-weight: 500;
-          &.alive {
-            background-color: rgba(76, 175, 80, 0.9);
-          }
+          opacity: 0.9;
+          transition: opacity 0.3s ease;
         }
       }
+
+      &:hover .card-image-container img {
+        opacity: 1;
+      }
+
       mat-card-content {
         padding: 16px;
-        text-align: left;
-        background-color: #1a1a1a;
+        text-align: center;
+        background-color: #1a1a1a !important;
+
         h2 {
           margin: 0 0 8px 0;
-          font-size: 1.5em;
+          font-size: clamp(1.2rem, 3vw, 1.8rem);
           color: white;
           font-weight: 500;
-          text-align: center;
+          line-height: 1.2;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          font-family: 'IM Fell English SC', serif;
         }
+
         .house-name {
-          margin: 0 0 16px 0;
-          font-size: 1.1em;
+          margin: 0;
+          font-size: clamp(1rem, 2.5vw, 1.4rem);
           font-weight: 500;
-          text-align: center;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          font-family: 'Cinzel', serif;
+
           &.gryffindor { color: #FF0000; }
           &.slytherin { color: #00FF00; }
           &.hufflepuff { color: #FFD700; }
           &.ravenclaw { color: #0000FF; }
         }
-        .character-details {
-          .detail-section {
-            margin-bottom: 16px;
-            padding: 12px;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 4px;
-
-            h3 {
-              color: #673ab7;
-              margin: 0 0 8px 0;
-              font-size: 1.1em;
-              font-weight: 500;
-            }
-
-            h4 {
-              color: #fff;
-              margin: 8px 0;
-              font-size: 1em;
-            }
-
-            p {
-              margin: 4px 0;
-              color: #cccccc;
-              font-size: 0.9em;
-              strong {
-                color: #fff;
-              }
-            }
-          }
-
-          .role-badges {
-            display: flex;
-            gap: 8px;
-            .badge {
-              padding: 4px 12px;
-              border-radius: 16px;
-              background-color: #673ab7;
-              color: white;
-              font-size: 0.9em;
-            }
-          }
-
-          .alternate-names {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            .alt-name {
-              padding: 4px 12px;
-              border-radius: 16px;
-              background-color: rgba(103, 58, 183, 0.2);
-              color: #cccccc;
-              font-size: 0.9em;
-            }
-          }
-
-          .wand-info {
-            padding: 8px 0;
-          }
-        }
-      }
-    }
-    .spell-card {
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      background-color: #1a1a1a;
-      &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 15px rgba(103, 58, 183, 0.3);
-      }
-      mat-card-content {
-        h2 {
-          color: #ffffff;
-          margin-bottom: 10px;
-          font-size: 1.3em;
-        }
-        .spell-preview {
-          color: #cccccc;
-          margin-bottom: 15px;
-        }
-        button {
-          width: 100%;
-          margin-top: 10px;
-          color: #ffffff;
-          border: 1px solid #673ab7;
-        }
       }
     }
 
-    @media (max-width: 768px) {
+    /* Extra Small Devices (phones) */
+    @media (max-width: 480px) {
+      .container {
+        padding: 10px;
+      }
+
       .character-grid, .spells-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
         gap: 16px;
         padding: 0 10px;
       }
-      .character-card .card-image-container {
-        height: 280px;
-      }
-      .character-card mat-card-content {
-        padding: 12px;
-        .character-details .detail-section {
-          padding: 8px;
+
+      .character-card {
+        max-width: 100%;
+
+        .card-image-container {
+          padding-top: 130%;
         }
+
+        mat-card-content {
+          padding: 12px;
+        }
+      }
+    }
+
+    /* Small Devices (tablets) */
+    @media (min-width: 481px) and (max-width: 768px) {
+      .character-grid, .spells-grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+      }
+    }
+
+    /* Medium Devices (laptops) */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .character-grid, .spells-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      }
+    }
+
+    /* Large Devices (desktops) */
+    @media (min-width: 1025px) {
+      .character-grid, .spells-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       }
     }
   `]
@@ -268,64 +217,64 @@ export class CharacterListComponent implements OnInit {
 
   constructor(
     private harryPotterService: HarryPotterService,
-    private router: Router,
     private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.loadAllCharacters();
+    this.loadCharacters();
   }
 
-  loadAllCharacters(): void {
+  loadCharacters(): void {
     this.harryPotterService.getAllCharacters().subscribe(
-      characters => this.characters = characters
+      (data: Character[]) => {
+        this.characters = data;
+      },
+      (error: Error) => {
+        console.error('Error fetching characters:', error);
+      }
     );
   }
 
-  handleFilterChange(event: {type: FilterType, house?: string}): void {
-    this.showSpells = false;
+  showDetails(character: Character): void {
+    this.dialog.open(CharacterDialogComponent, {
+      data: character,
+      width: '90%',
+      maxWidth: '800px',
+      panelClass: 'character-dialog'
+    });
+  }
+
+  handleFilterChange(filter: { type: FilterType; house?: string }): void {
+    this.showSpells = filter.type === 'spells';
     
-    switch(event.type) {
-      case 'all':
-        this.loadAllCharacters();
-        break;
-      case 'house':
-        if (event.house) {
-          this.harryPotterService.getCharactersByHouse(event.house).subscribe(
-            characters => this.characters = characters
-          );
-        } else {
-          this.loadAllCharacters();
-        }
-        break;
-      case 'students':
-        this.harryPotterService.getStudents().subscribe(
-          characters => this.characters = characters
+    if (filter.type === 'all') {
+      if (filter.house) {
+        this.harryPotterService.getCharactersByHouse(filter.house).subscribe(
+          (data) => this.characters = data,
+          (error) => console.error('Error fetching characters by house:', error)
         );
-        break;
-      case 'staff':
-        this.harryPotterService.getStaff().subscribe(
-          characters => this.characters = characters
-        );
-        break;
-      case 'spells':
-        this.showSpells = true;
-        this.harryPotterService.getSpells().subscribe(
-          spells => this.spells = spells
-        );
-        break;
+      } else {
+        this.loadCharacters();
+      }
+    } else if (filter.type === 'students') {
+      this.harryPotterService.getStudents().subscribe(
+        (data) => this.characters = data,
+        (error) => console.error('Error fetching students:', error)
+      );
+    } else if (filter.type === 'staff') {
+      this.harryPotterService.getStaff().subscribe(
+        (data) => this.characters = data,
+        (error) => console.error('Error fetching staff:', error)
+      );
+    } else if (filter.type === 'spells') {
+      this.harryPotterService.getSpells().subscribe(
+        (data) => this.spells = data,
+        (error) => console.error('Error fetching spells:', error)
+      );
     }
   }
 
-  showDetails(character: Character): void {
-    this.router.navigate(['/character', character.id]);
-  }
-
   showSpellDetails(spell: Spell): void {
-    this.dialog.open(SpellDialogComponent, {
-      data: spell,
-      width: '400px',
-      panelClass: 'spell-dialog'
-    });
+    alert(`${spell.name}: ${spell.description}`);
   }
 }

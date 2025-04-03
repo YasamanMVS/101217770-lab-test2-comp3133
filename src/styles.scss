@@ -1,77 +1,182 @@
-@use '@angular/material' as mat;
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import '@angular/material/prebuilt-themes/purple-green.css';
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap');
 
+/* Global styles */
 html, body {
   height: 100%;
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'Cinzel', "Helvetica Neue", sans-serif;
+  background-color: #121212;
+  color: #ffffff;
 }
 
-@include mat.core();
-
-$primary-palette: (
-  50: #e3f2fd,
-  100: #bbdefb,
-  200: #90caf9,
-  300: #64b5f6,
-  400: #42a5f5,
-  500: #2196f3,
-  600: #1e88e5,
-  700: #1976d2,
-  800: #1565c0,
-  900: #0d47a1,
-  contrast: (
-    50: rgba(black, 0.87),
-    100: rgba(black, 0.87),
-    200: rgba(black, 0.87),
-    300: rgba(black, 0.87),
-    400: rgba(black, 0.87),
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-  )
-);
-
-$theme-primary: mat.define-palette($primary-palette);
-$theme-accent: mat.define-palette(mat.$amber-palette);
-$theme-warn: mat.define-palette(mat.$red-palette);
-
-$theme: mat.define-light-theme((
-  color: (
-    primary: $theme-primary,
-    accent: $theme-accent,
-    warn: $theme-warn,
-  ),
-  typography: mat.define-typography-config(),
-  density: 0,
-));
-
-@include mat.all-component-themes($theme);
-
-.mat-mdc-card {
-  border-radius: 8px !important;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+body {
+  min-height: 100vh;
+  background-color: #121212;
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 20px;
 }
 
-.fade-in {
-  animation: fadeIn 0.3s ease-in;
+h1 {
+  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5em;
+  font-weight: 500;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+.mat-mdc-card {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3) !important;
+}
+
+.mat-mdc-button-toggle-group {
+  margin-bottom: 20px;
+  background-color: #1a1a1a;
+}
+
+.mat-mdc-button-toggle {
+  color: #ffffff !important;
+  background-color: #1a1a1a !important;
+}
+
+.mat-mdc-button-toggle-checked {
+  background-color: #673ab7 !important;
+  color: white !important;
+}
+
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* Dialog styles */
+.spell-dialog {
+  .mat-mdc-dialog-container {
+    padding: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #1a1a1a;
+    color: white;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .mat-mdc-dialog-content {
+    padding: 24px;
+    max-height: 70vh;
+    color: #cccccc;
   }
+
+  .mat-mdc-dialog-actions {
+    padding: 16px;
+    margin-bottom: 0;
+    border-top: 1px solid #333;
+  }
+
+  .mat-mdc-button {
+    color: white;
+  }
+}
+
+.character-dialog {
+  .mat-mdc-dialog-container {
+    padding: 0 !important;
+  }
+
+  .mdc-dialog__surface {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+  }
+
+  .mdc-dialog__content {
+    color: #ffffff !important;
+  }
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
+
+/* Material overrides */
+.mat-toolbar {
+  background-color: #1a1a1a !important;
+}
+
+.mat-mdc-button-base {
+  font-family: 'Cinzel', serif !important;
+}
+
+@media (max-width: 768px) {
+  .character-grid, .spells-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+  }
+  
+  .character-card .card-image-container {
+    height: 200px !important;
+  }
+
+  .spell-dialog {
+    width: 90vw !important;
+    max-width: none !important;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+}
+
+/* Loading animation */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: white;
+}
+
+/* Smooth transitions */
+.character-card, .spell-card {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Accessibility improvements */
+.mat-mdc-button-toggle:focus {
+  outline: 2px solid #673ab7;
+  outline-offset: 2px;
+}
+
+/* Error state */
+.error-message {
+  color: #ff4444;
+  text-align: center;
+  padding: 1rem;
+  margin: 1rem 0;
+  background-color: rgba(255, 68, 68, 0.1);
+  border-radius: 4px;
 }

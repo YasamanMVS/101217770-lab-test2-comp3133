@@ -1,41 +1,57 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+
+interface SpellData {
+  name: string;
+  description: string;
+}
 
 @Component({
   selector: 'app-spell-dialog',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule],
+  imports: [CommonModule, MatButtonModule],
   template: `
     <h2 mat-dialog-title>{{data.name}}</h2>
     <mat-dialog-content>
-      <p class="spell-description">{{data.description}}</p>
+      <p>{{data.description}}</p>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
       <button mat-button (click)="close()">Close</button>
     </mat-dialog-actions>
   `,
   styles: [`
-    .spell-description {
-      font-size: 16px;
-      line-height: 1.6;
-      color: #333;
-      margin: 16px 0;
+    :host {
+      display: block;
+      background-color: #1a1a1a;
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
     }
     h2 {
       color: #673ab7;
-      margin: 0;
-      padding: 16px;
-      background: #f5f5f5;
-      border-radius: 4px 4px 0 0;
+      margin: 0 0 16px 0;
+      font-size: 1.5em;
+    }
+    p {
+      color: #cccccc;
+      line-height: 1.6;
+      margin: 0 0 20px 0;
+    }
+    mat-dialog-actions {
+      margin-bottom: -10px;
+      padding: 8px 0;
+    }
+    button {
+      color: white !important;
     }
   `]
 })
 export class SpellDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<SpellDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { name: string; description: string }
+    @Inject(MAT_DIALOG_DATA) public data: SpellData
   ) {}
 
   close(): void {
