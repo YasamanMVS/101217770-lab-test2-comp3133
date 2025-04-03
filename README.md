@@ -93,5 +93,5 @@ The application is deployed and can be accessed at: (https://101217770-lab-test2
 
 ## Author
 
-Yasaman Mirvahabi Sabet - 101217770
+Yasaman Mirvahabi Sabet
 Student ID: 101217770
