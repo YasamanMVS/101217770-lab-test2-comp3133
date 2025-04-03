@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { HogwartsHouse } from '../../interfaces/character.interface';
 
-export type FilterType = 'house' | 'students' | 'staff' | 'spells' | 'all';
+export type FilterType = 'all' | 'students' | 'staff' | 'spells';
 
 @Component({
   selector: 'app-character-filter',
@@ -110,6 +110,6 @@ export class CharacterFilterComponent {
   }
 
   onHouseChange(): void {
-    this.filterChanged.emit({type: 'house', house: this.selectedHouse});
+    this.filterChanged.emit({type: 'all', house: this.selectedHouse});
   }
 } 

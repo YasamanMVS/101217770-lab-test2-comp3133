@@ -250,26 +250,42 @@ export class CharacterListComponent implements OnInit {
     if (filter.type === 'all') {
       if (filter.house) {
         this.harryPotterService.getCharactersByHouse(filter.house).subscribe(
-          (data) => this.characters = data,
-          (error) => console.error('Error fetching characters by house:', error)
+          (data: Character[]) => {
+            this.characters = data;
+          },
+          (error: Error) => {
+            console.error('Error fetching characters by house:', error);
+          }
         );
       } else {
         this.loadCharacters();
       }
     } else if (filter.type === 'students') {
       this.harryPotterService.getStudents().subscribe(
-        (data) => this.characters = data,
-        (error) => console.error('Error fetching students:', error)
+        (data: Character[]) => {
+          this.characters = data;
+        },
+        (error: Error) => {
+          console.error('Error fetching students:', error);
+        }
       );
     } else if (filter.type === 'staff') {
       this.harryPotterService.getStaff().subscribe(
-        (data) => this.characters = data,
-        (error) => console.error('Error fetching staff:', error)
+        (data: Character[]) => {
+          this.characters = data;
+        },
+        (error: Error) => {
+          console.error('Error fetching staff:', error);
+        }
       );
     } else if (filter.type === 'spells') {
       this.harryPotterService.getSpells().subscribe(
-        (data) => this.spells = data,
-        (error) => console.error('Error fetching spells:', error)
+        (data: any[]) => {
+          this.spells = data;
+        },
+        (error: Error) => {
+          console.error('Error fetching spells:', error);
+        }
       );
     }
   }
