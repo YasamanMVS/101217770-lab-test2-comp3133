@@ -1,12 +1,25 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  standalone: true,
+  imports: [RouterOutlet, MatToolbarModule],
+  template: `
+    <mat-toolbar color="primary">
+      <span>Harry Potter Characters</span>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  `,
+  styles: [`
+    :host {
+      display: block;
+      min-height: 100vh;
+      background-color: #f5f5f5;
+    }
+  `]
 })
 export class AppComponent {
-  title = '101217770-lab-test2-comp3133';
+  title = 'Harry Potter Characters';
 }
