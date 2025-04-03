@@ -56,7 +56,7 @@ The build artifacts will be stored in the `dist/` directory.
 
 ## Deployment
 
-The application is deployed on Vercel and can be accessed at [].
+The application is deployed on Vercel and can be accessed at https://101217770-lab-test2-comp3133.vercel.app/
 
 ## Technologies Used
 
